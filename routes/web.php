@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemDinasTravelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -27,6 +28,8 @@ Route::post('login-proccess', [LoginController::class, 'login_proccess']);
 Route::middleware(['auth_check'])->group(function(){
     Route::get('/', [MainController::class, 'index']);
 
+    Route::get('/api/role', [RoleController::class, 'readAll']);
+
     Route::get('/user', [UserController::class, 'index']);
     Route::get('/dinas-travel', [DinasTravelController::class, 'index']);
     Route::get('/item-dinas-travel', [ItemDinasTravelController::class, 'index']);
@@ -38,13 +41,13 @@ Route::middleware(['auth_check'])->group(function(){
     Route::delete('/api/user/{id}', [UserController::class, 'delete']);
 
     Route::get('/api/dinas-travel', [DinasTravelController::class, 'readAll']);
-    Route::get('/api/dinas-travel', [DinasTravelController::class, 'readOne']);
+    Route::get('/api/dinas-travel/{id}', [DinasTravelController::class, 'readOne']);
     Route::post('/api/dinas-travel', [DinasTravelController::class, 'create']);
     Route::put('/api/dinas-travel', [DinasTravelController::class, 'update']);
     Route::delete('/api/dinas-travel/{id}', [DinasTravelController::class, 'delete']);
 
     Route::get('/api/item-dinas-travel', [ItemDinasTravelController::class, 'readAll']);
-    Route::get('/api/item-dinas-travel', [ItemDinasTravelController::class, 'readOne']);
+    Route::get('/api/item-dinas-travel/{id}', [ItemDinasTravelController::class, 'readOne']);
     Route::post('/api/item-dinas-travel', [ItemDinasTravelController::class, 'create']);
     Route::put('/api/item-dinas-travel', [ItemDinasTravelController::class, 'update']);
     Route::delete('/api/item-dinas-travel/{id}', [ItemDinasTravelController::class, 'delete']);

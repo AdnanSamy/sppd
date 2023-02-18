@@ -6,10 +6,16 @@ use App\Models\DinasTravel;
 use App\Models\ItemDinasTravel;
 use App\Models\ItemRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DinasTravelController extends Controller
 {
     //
+
+    public function index()
+    {
+        return view('dinas_travel');
+    }
 
     public function readOne(Request $req, $id)
     {
@@ -17,15 +23,15 @@ class DinasTravelController extends Controller
             $dinasTravel = DinasTravel::where('id', $id)
                 ->get();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $dinasTravel,
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -34,15 +40,15 @@ class DinasTravelController extends Controller
         try {
             $dinasTravel = DinasTravel::all();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $dinasTravel,
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -67,14 +73,14 @@ class DinasTravelController extends Controller
 
             ItemRequest::create($items);
 
-            return [
+            return response()->json([
                 'message' => 'success',
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -99,14 +105,14 @@ class DinasTravelController extends Controller
 
             ItemRequest::create($items);
 
-            return [
+            return response()->json([
                 'message' => 'success',
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -115,14 +121,14 @@ class DinasTravelController extends Controller
         try {
             DinasTravel::destroy($id);
 
-            return [
+            return response()->json([
                 'message' => 'success',
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

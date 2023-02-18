@@ -56,19 +56,25 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-                    <table class="table table-border" id="main_table">
-                        <thead class="bg-dark">
-                            <th>No.</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                        </thead>
-                        <tbody>
+                <div class="card p-2">
+                    <div class="row m-2">
+                        <button class="btn btn-primary ml-auto" id="btnNew">New</button>
+                    </div>
+                    <div class="container">
+                        <table class="table table-border mt-2" id="main_table">
+                            <thead class="bg-dark">
+                                <th>No.</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
-                </div><!-- /.container-fluid -->
+                            </tbody>
+                        </table>
+                    </div><!-- /.container-fluid -->
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -99,10 +105,46 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="saveType">
+                    <input type="hidden" id="dataId">
+                    <div class="form-group">
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" required class="form-control" id="name">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="email" required class="form-control" id="email">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="password" required class="form-control" id="password">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="role">Role</label>
+                            </div>
+                            <div class="col-md-12">
+                                <select id="role" class="form-control" required></select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <button id="save" type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -110,9 +152,6 @@
     <!-- ./wrapper -->
 
     @include('script')
-    <script>
-        const _token = '{{ csrf_token() }}'
-    </script>
     <script src="{{ asset('js/user.js') }}"></script>
 </body>
 

@@ -1,9 +1,9 @@
 const mainTable = $("#main_table");
-const modalUser = $("#modalUser");
-const nameEl = $("#name");
-const email = $("#email");
-const password = $("#password");
-const role = $("#role");
+const itemTable = $("#itemTable");
+const modalDinas = $("#modalDinas");
+const modalItem = $("#modalItem");
+const btnNewItem = $("#btnNewItem");
+const judul = $("#judul");
 const save = $("#save");
 const saveType = $("#saveType");
 const btnNew = $("#btnNew");
@@ -11,13 +11,43 @@ const dataId = $("#dataId");
 const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
 
-mainTable.DataTable();
+const getAll = function () {
+    $.ajax({
+        url: "/api/dinas-travel",
+        type: "get",
+        success: function (res) {
+            console.log("response get all -> ", res);
+            const { data } = res;
+
+            mainTable.DataTable().destroy();
+
+            data.forEach((e, i) => {
+                mainTable.find("tbody").append(`
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${e.judul}</td>
+                        <td>${e.status}</td>
+                        <td>${e.total}</td>
+                        <td>
+                            <button class="btn btn-warning" onclick="edit(${
+                                e.id
+                            })">Edit</button>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            mainTable.DataTable();
+        },
+    });
+};
 
 const edit = function (id) {
     saveType.val(UPDATE_VALUE);
     dataId.val(id);
     $.ajax({
-        url: `/api/user/${id}`,
+        url: `/api/dinas-travel/${id}`,
         type: "get",
         success: function (res) {
             const { data } = res;
@@ -25,14 +55,14 @@ const edit = function (id) {
             email.val(data.email);
             role.val(data.role_id);
 
-            modalUser.modal("show");
+            modalDinas.modal("show");
         },
     });
 };
 
 const updateProcess = function () {
     $.ajax({
-        url: "/api/user",
+        url: "/api/dinas-travel",
         type: "put",
         data: {
             id: dataId.val(),
@@ -54,7 +84,7 @@ const updateProcess = function () {
 
 const saveProccess = function () {
     $.ajax({
-        url: "/api/user",
+        url: "/api/dinas-travel",
         type: "post",
         data: {
             name: nameEl.val(),
@@ -72,50 +102,19 @@ const saveProccess = function () {
     });
 };
 
-const getRoles = function () {
+const getItemDinasTravels = function () {
     $.ajax({
-        url: "/api/role",
+        url: "/api/item-dinas-travel",
         type: "get",
         success: function (res) {
-            const { data } = res;
-            data.forEach((d) => {
-                role.append(`
-                    <option value="${d.id}">${d.name}</option>
-                `);
-            });
+            console.log("ITEM DINAS TRAVEL -> ", res);
+        },
+        error: function (err) {
+            alert("error");
+            console.log("ERR -> ", err);
         },
     });
 };
-
-$.ajax({
-    url: "/api/user",
-    type: "get",
-    success: function (res) {
-        console.log("response get all -> ", res);
-        const { data } = res;
-
-        mainTable.DataTable().destroy();
-
-        data.forEach((e, i) => {
-            mainTable.find("tbody").append(`
-                <tr>
-                    <td>${i + 1}</td>
-                    <td>${e.name}</td>
-                    <td>${e.email}</td>
-                    <td>${e.role.name}</td>
-                    <td>
-                        <button class="btn btn-warning" onclick="edit(${
-                            e.id
-                        })">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-            `);
-        });
-
-        mainTable.DataTable();
-    },
-});
 
 save.click(function () {
     if (saveType.val() == SAVE_VALUE) {
@@ -128,9 +127,15 @@ save.click(function () {
 btnNew.click(function () {
     saveType.val(SAVE_VALUE);
 
-    modalUser.modal("show");
+    modalDinas.modal("show");
 });
 
 $(document).ready(function () {
-    getRoles();
+    // getRoles();
+    mainTable.DataTable({
+        width: "100%",
+    });
+    itemTable.DataTable();
+    getAll();
+    getItemDinasTravels();
 });

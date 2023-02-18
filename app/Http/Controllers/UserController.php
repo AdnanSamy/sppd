@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
-    public function index(Request $req){
+    public function index(Request $req)
+    {
         return view('user');
     }
 
@@ -17,17 +20,17 @@ class UserController extends Controller
     {
         try {
             $user = User::where('id', $id)
-                ->get();
+                ->first();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $user,
-            ];
+            ], 200);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], 500);
         }
     }
 
@@ -36,61 +39,63 @@ class UserController extends Controller
         try {
             $user = User::with('role')->get();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $user,
-            ];
+            ], 200);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], 500);
         }
     }
 
     public function create(Request $req)
     {
         try {
+            $role = Role::where('id', $req->role_id)->first();
+
             $user = new User();
-            $user->item = $req->item;
             $user->name = $req->name;
             $user->email = $req->email;
             $user->password = Hash::make($req->password);
-            $user->role_id = $req->roleId;
+            $user->role()->associate($role);
             $user->save();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $user
-            ];
+            ], 200);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function update(Request $req)
     {
         try {
+            $role = Role::where('id', $req->role_id)->first();
+
             $user = User::find($req->id);
-            $user->item = $req->item;
             $user->name = $req->name;
             $user->email = $req->email;
             $user->password = Hash::make($req->password);
-            $user->role_id = $req->roleId;
+            $user->role()->associate($role);
             $user->save();
 
-            return [
+            return response()->json([
                 'message' => 'success',
                 'data' => $user,
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -99,14 +104,14 @@ class UserController extends Controller
         try {
             User::destroy($id);
 
-            return [
+            return response()->json([
                 'message' => 'success',
-            ];
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return [
+            return response()->json([
                 'message' => 'Internal Server Error',
                 'detail' => $th->getMessage(),
-            ];
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

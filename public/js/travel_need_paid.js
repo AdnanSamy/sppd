@@ -9,7 +9,8 @@ const dataId = $("#dataId");
 const itemRequests = [];
 const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
-const note = $("#note");
+const buktiPembayaran = $("#buktiPembayaran");
+const btnPay = $("#btnPay");
 
 function uuid() {
     return (
@@ -21,6 +22,27 @@ function uuid() {
 const actionPay = function (id) {
     dataId.val(id);
     modalPay.modal("show");
+};
+
+const pay = function () {
+    const fd = new FormData();
+    fd.append("id", dataId.val());
+    fd.append("bukti_pembayaran", buktiPembayaran[0].files[0]);
+
+    $.ajax({
+        url: "/api/dinas-travel/upload-bukti",
+        type: "post",
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            // location.reload();
+            console.log(res);
+        },
+        error: function (res) {
+            console.log(res);
+        },
+    });
 };
 
 const getAll = function () {
@@ -59,59 +81,6 @@ const clearItemRequest = function () {
     generateItemRequest();
 };
 
-const edit = function (id) {
-    saveType.val(UPDATE_VALUE);
-    dataId.val(id);
-    $.ajax({
-        url: `/api/dinas-travel/${id}`,
-        type: "get",
-        success: function (res) {
-            console.log("EDIT RESPONSE -> ", res);
-            const { data } = res;
-            const { item_request } = data;
-
-            clearItemRequest();
-
-            judul.val(data.judul);
-            item_request.map((item) => {
-                const { item_dinas_travel } = item;
-
-                itemRequests.push({
-                    id: uuid(),
-                    item: item_dinas_travel.item,
-                    item_dinas_travel_id: item_dinas_travel.id,
-                    price: item.price,
-                });
-            });
-
-            generateItemRequest();
-
-            modalDinas.modal("show");
-        },
-    });
-};
-
-const getItemDinasTravels = function () {
-    $.ajax({
-        url: "/api/item-dinas-travel",
-        type: "get",
-        success: function (res) {
-            console.log("ITEM DINAS TRAVEL -> ", res);
-            const { data } = res;
-
-            data.forEach((d) => {
-                item.append(`
-                    <option value="${d.id}">${d.item}</option>
-                `);
-            });
-        },
-        error: function (err) {
-            alert("error");
-            console.log("ERR -> ", err);
-        },
-    });
-};
-
 const generateItemRequest = function () {
     itemTable.DataTable().destroy();
     itemTable.find("tbody").html("");
@@ -135,21 +104,8 @@ const generateItemRequest = function () {
     });
 };
 
-btnReject.click(function () {
-    reject();
-});
-
-saveItem.click(function () {
-    const optionSelected = item.find(":selected");
-    itemRequests.push({
-        id: uuid(),
-        item: optionSelected.text(),
-        item_dinas_travel_id: optionSelected.val(),
-        price: price.val(),
-    });
-
-    generateItemRequest();
-    modalItem.modal("hide");
+btnPay.click(function () {
+    pay();
 });
 
 $(document).ready(function () {
@@ -157,7 +113,5 @@ $(document).ready(function () {
     mainTable.DataTable({
         width: "100%",
     });
-    itemTable.DataTable();
     getAll();
-    getItemDinasTravels();
 });

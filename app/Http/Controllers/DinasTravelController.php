@@ -8,6 +8,7 @@ use App\Models\ItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class DinasTravelController extends Controller
 {
@@ -26,6 +27,29 @@ class DinasTravelController extends Controller
     public function travelNeedPaid()
     {
         return view('dinas_need_paid');
+    }
+
+    public function uploadBuktiPembayaran(Request $req)
+    {
+        try {
+
+            // $fileName = $req->file('bukti_pembayaran')->getClientOriginalName();
+            $path = Storage::put('public', $req->file('bukti_pembayaran'));
+            $dinasTravel = DinasTravel::find($req->id);
+            $dinasTravel->bukti_transfer = $path;
+            $dinasTravel->status = 'paid';
+            $dinasTravel->save();
+
+            return response()->json([
+                'message' => 'success',
+                'data' => $path,
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Internal Server Error',
+                'detail' => $th->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function approve(Request $req)

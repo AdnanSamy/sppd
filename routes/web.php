@@ -50,6 +50,7 @@ Route::middleware(['auth_check'])->group(function () {
     Route::put('/api/dinas-travel', [DinasTravelController::class, 'update']);
     Route::put('/api/dinas-travel/approve', [DinasTravelController::class, 'approve']);
     Route::put('/api/dinas-travel/reject', [DinasTravelController::class, 'reject']);
+    Route::post('/api/dinas-travel/upload-bukti', [DinasTravelController::class, 'uploadBuktiPembayaran']);
     Route::delete('/api/dinas-travel/{id}', [DinasTravelController::class, 'delete']);
 
     Route::get('/api/item-dinas-travel', [ItemDinasTravelController::class, 'readAll']);

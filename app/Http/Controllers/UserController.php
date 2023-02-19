@@ -64,6 +64,8 @@ class UserController extends Controller
             $user->name = $req->name;
             $user->email = $req->email;
             $user->password = Hash::make($req->password);
+            $user->no_rek = $req->no_rek;
+            $user->bank = $req->bank;
             $user->role()->associate($role);
             $user->save();
 
@@ -88,6 +90,8 @@ class UserController extends Controller
             $user->name = $req->name;
             $user->email = $req->email;
             $user->password = Hash::make($req->password);
+            $user->no_rek = $req->no_rek;
+            $user->bank = $req->bank;
             $user->role()->associate($role);
             $user->save();
 

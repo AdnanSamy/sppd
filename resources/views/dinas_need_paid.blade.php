@@ -65,6 +65,7 @@
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>No Rekening</th>
+                                <th>Bank</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>

@@ -3,6 +3,8 @@ const modalUser = $("#modalUser");
 const nameEl = $("#name");
 const email = $("#email");
 const password = $("#password");
+const noRek = $("#noRek");
+const bank = $("#bank");
 const role = $("#role");
 const save = $("#save");
 const saveType = $("#saveType");
@@ -58,6 +60,8 @@ const edit = function (id) {
             nameEl.val(data.name);
             email.val(data.email);
             role.val(data.role_id);
+            noRek.val(data.no_rek);
+            bank.val(data.bank);
 
             modalUser.modal("show");
         },
@@ -74,6 +78,8 @@ const updateProcess = function () {
             email: email.val(),
             password: password.val(),
             role_id: role.val(),
+            no_rek: noRek.val(),
+            bank: bank.val(),
         },
         success: function (res) {
             // console.log("RESPONSE UPDATE -> ", res);
@@ -94,6 +100,8 @@ const saveProccess = function () {
             name: nameEl.val(),
             email: email.val(),
             password: password.val(),
+            no_rek: noRek.val(),
+            bank: bank.val(),
             role_id: role.val(),
         },
         success: function (res) {

@@ -118,6 +118,22 @@
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-12">
+                                <label for="noRek">No Rekening</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" required class="form-control" id="noRek">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="bank">Bank</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" required class="form-control" id="bank">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-12">
                                 <label for="email">Email</label>
                             </div>
                             <div class="col-md-12">

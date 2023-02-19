@@ -8,6 +8,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,15 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('login-proccess', [LoginController::class, 'login_proccess']);
+Route::get('/logout', function (Request $req) {
+    Auth::logout();
+
+    $req->session()->invalidate();
+
+    $req->session()->regenerateToken();
+
+    return redirect('/');
+});
 Route::middleware(['auth_check'])->group(function () {
     Route::get('/', [MainController::class, 'index']);
 
@@ -48,6 +59,7 @@ Route::middleware(['auth_check'])->group(function () {
     Route::delete('/api/user/{id}', [UserController::class, 'delete']);
 
     Route::get('/api/dinas-travel', [DinasTravelController::class, 'readAll']);
+    Route::get('/api-dinas-travel/bukti-transfer/{id}', [DinasTravelController::class, 'buktiTransfer']);
     Route::get('/api/dinas-travel/need-approval', [DinasTravelController::class, 'readAllByNeedApproval']);
     Route::get('/api/dinas-travel/need-paid', [DinasTravelController::class, 'readAllByNeedPaid']);
     Route::get('/api/dinas-travel/{id}', [DinasTravelController::class, 'readOne']);

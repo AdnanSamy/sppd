@@ -16,6 +16,8 @@ const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
 const note = $("#note");
 const total = $("#total");
+const modalBuktiTransfer = $("#modalBuktiTransfer");
+const buktiTransfer = $("#buktiTransfer");
 
 function uuid() {
     return (
@@ -35,7 +37,7 @@ const getAll = function () {
             mainTable.DataTable().destroy();
 
             data.forEach((e, i) => {
-                mainTable.find("tbody").append(`
+                let html = `
                     <tr>
                         <td>${i + 1}</td>
                         <td>${e.judul}</td>
@@ -48,9 +50,20 @@ const getAll = function () {
                             <button class="btn btn-danger" onclick="deleteData(${
                                 e.id
                             })">Delete</button>
+
+                `;
+
+                if (e.bukti_transfer != null) {
+                    html += `
+                        <button class="btn btn-success m-1" onclick="getBuktiTransfer(${e.id})">Bukti Pembayaran</button>
+                    `;
+                }
+
+                html += `
                         </td>
                     </tr>
-                `);
+                `;
+                mainTable.find("tbody").append(html);
             });
 
             mainTable.DataTable();
@@ -71,6 +84,19 @@ const deleteData = function (id) {
             location.reload();
         },
     });
+};
+
+const getBuktiTransfer = function (id) {
+    buktiTransfer.attr("src", `/api-dinas-travel/bukti-transfer/${id}`);
+    modalBuktiTransfer.modal("show");
+    // $.ajax({
+    //     url: `/api-dinas-travel/bukti-transfer/${id}`,
+    //     type: "get",
+    //     success: function (res) {
+    //         console.log("RESPONSE BUKTI TRANSFER -> ", res);
+    //         const url = "data:image/jpg;base64," + btoa(res);
+    //     },
+    // });
 };
 
 const edit = function (id) {
@@ -201,7 +227,7 @@ const generateItemRequest = function () {
         `);
     });
 
-    total.val(totalPrice)
+    total.val(totalPrice);
 
     itemTable.DataTable({
         width: "100%",

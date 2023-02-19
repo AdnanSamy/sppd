@@ -39,6 +39,13 @@ class DinasTravelController extends Controller
             ]);
     }
 
+    public function buktiTransfer(Request $req, $id)
+    {
+        $dinasTravel = DinasTravel::find($id);
+
+        return Storage::download($dinasTravel->bukti_transfer);
+    }
+
     public function uploadBuktiPembayaran(Request $req)
     {
         try {

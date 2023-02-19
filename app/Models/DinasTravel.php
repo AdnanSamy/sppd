@@ -18,7 +18,7 @@ class DinasTravel extends Model
 
     public function requestUserId()
     {
-        return $this->user(User::class, 'request_user_id');
+        return $this->belongsTo(User::class, 'request_user_id');
     }
 
     // public function itemDinasTravel(){

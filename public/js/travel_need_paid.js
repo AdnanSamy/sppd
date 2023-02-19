@@ -62,6 +62,7 @@ const getAll = function () {
                         <td>${e.judul}</td>
                         <td>${e.status}</td>
                         <td>${e.total}</td>
+                        <td>${e.request_user_id.no_rek}</td>
                         <td>
                             <button class="btn btn-warning" onclick="actionPay(${
                                 e.id

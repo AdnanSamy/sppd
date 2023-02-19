@@ -64,6 +64,7 @@
                                 <th>Judul</th>
                                 <th>Status</th>
                                 <th>Total</th>
+                                <th>No Rekening</th>
                                 <th>Action</th>
                             </thead>
                             <tbody>

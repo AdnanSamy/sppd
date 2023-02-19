@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DinasTravel;
 use App\Models\ItemDinasTravel;
 use App\Models\ItemRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -130,7 +131,9 @@ class DinasTravelController extends Controller
     public function readAllByNeedPaid(Request $req)
     {
         try {
-            $dinasTravel = DinasTravel::where('status', 'approved')->get();
+            $dinasTravel = DinasTravel::where('status', 'approved')
+                ->with('requestUserId')
+                ->get();
 
             return response()->json([
                 'message' => 'success',
@@ -185,10 +188,13 @@ class DinasTravelController extends Controller
         try {
             DB::beginTransaction();
 
+            $user = User::where('id', Auth::user()->id)->first();
+
             $dinasTravel = new DinasTravel;
             $dinasTravel->judul = $req->judul;
             $dinasTravel->total = $req->total;
             $dinasTravel->status = 'need_approval';
+            $dinasTravel->requestUserId()->associate($user);
             $dinasTravel->save();
 
             foreach ($req->itemRequest as $item) {

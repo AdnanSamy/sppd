@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\ItemDinasTravel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ItemDinasTravelController extends Controller
 {
 
     public function index()
     {
-        return view('item_dinas_travel');
+        return view('item_dinas_travel')
+            ->with([
+                'user' => Auth::user(),
+            ]);
     }
 
     public function readOne(Request $req, $id)

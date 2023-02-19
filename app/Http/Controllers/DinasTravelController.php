@@ -7,6 +7,7 @@ use App\Models\ItemDinasTravel;
 use App\Models\ItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,17 +17,26 @@ class DinasTravelController extends Controller
 
     public function index()
     {
-        return view('dinas_travel');
+        return view('dinas_travel')
+            ->with([
+                'user' => Auth::user(),
+            ]);
     }
 
     public function travelNeedApproval()
     {
-        return view('dinas_need_approval');
+        return view('dinas_need_approval')
+            ->with([
+                'user' => Auth::user(),
+            ]);
     }
 
     public function travelNeedPaid()
     {
-        return view('dinas_need_paid');
+        return view('dinas_need_paid')
+            ->with([
+                'user' => Auth::user(),
+            ]);
     }
 
     public function uploadBuktiPembayaran(Request $req)

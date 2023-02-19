@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -13,7 +14,10 @@ class UserController extends Controller
 
     public function index(Request $req)
     {
-        return view('user');
+        return view('user')
+            ->with([
+                'user' => Auth::user(),
+            ]);
     }
 
     public function readOne(Request $req, $id)

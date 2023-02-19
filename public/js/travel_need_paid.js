@@ -36,7 +36,7 @@ const pay = function () {
         processData: false,
         contentType: false,
         success: function (res) {
-            // location.reload();
+            location.reload();
             console.log(res);
         },
         error: function (res) {

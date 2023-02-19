@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DinasTravelController;
 use App\Http\Controllers\ItemDinasTravelController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,10 @@ Route::middleware(['auth_check'])->group(function () {
     Route::get('/travel-need-approval', [DinasTravelController::class, 'travelNeedApproval']);
     Route::get('/travel-need-paid', [DinasTravelController::class, 'travelNeedPaid']);
     Route::get('/item-dinas-travel', [ItemDinasTravelController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    Route::get('/api/dashboard', [DashboardController::class, 'getRequestDataPerMonth']);
+    Route::get('/api/dashboard/item-request', [DashboardController::class, 'getItemRequest']);
 
     Route::get('/api/role', [RoleController::class, 'readAll']);
 

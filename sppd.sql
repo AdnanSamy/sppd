@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 20, 2023 at 12:18 AM
+-- Generation Time: Feb 20, 2023 at 05:19 AM
 -- Server version: 8.0.32-0ubuntu0.20.04.2
 -- PHP Version: 7.4.3-4ubuntu2.17
 
@@ -46,9 +46,10 @@ CREATE TABLE `dinas_travel` (
 --
 
 INSERT INTO `dinas_travel` (`id`, `created_at`, `updated_at`, `judul`, `status`, `bukti_transfer`, `approved_id`, `total`, `request_user_id`, `note`) VALUES
-(15, '2023-02-19 01:08:50', '2023-02-19 08:35:55', 'Perjalanan 1', 'approved', 'public/A6h7PJiJGYHNAf4ZKOOHC7AAKoJiv6tREydplxai.jpg', NULL, 700001223, NULL, 'Periksa lagi'),
-(17, '2023-02-19 09:21:39', '2023-02-19 09:21:39', 'Perjalanan 2', 'need_approval', NULL, NULL, 20000, NULL, NULL),
-(18, '2023-02-19 09:23:22', '2023-02-19 09:23:22', 'Perjalanan 3', 'need_approval', NULL, NULL, 2, NULL, NULL);
+(15, '2023-02-19 01:08:50', '2023-02-19 15:05:27', 'Perjalanan 1', 'paid', 'public/QaZ3xQq3qdff7vBR00H97gLOpKd4quDh87azba2P.jpg', NULL, 700001223, NULL, 'Periksa lagi'),
+(17, '2023-02-19 09:21:39', '2023-02-19 09:21:39', 'Perjalanan 2', 'paid', NULL, NULL, 20000, NULL, NULL),
+(18, '2023-02-19 09:23:22', '2023-02-19 09:23:22', 'Perjalanan 3', 'paid', NULL, NULL, 2, NULL, NULL),
+(20, '2023-02-19 15:09:30', '2023-02-19 15:09:30', 'Perjalanan sekian', 'approved', NULL, NULL, 10000, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,8 @@ INSERT INTO `item_request` (`id`, `created_at`, `updated_at`, `item_dinas_travel
 (15, '2023-02-19 08:35:55', '2023-02-19 08:35:55', 2, 15, 50000),
 (16, '2023-02-19 08:35:55', '2023-02-19 08:35:55', 1, 15, 1223),
 (17, '2023-02-19 09:21:39', '2023-02-19 09:21:39', 1, 17, 20000),
-(18, '2023-02-19 09:23:22', '2023-02-19 09:23:22', 1, 18, 2);
+(18, '2023-02-19 09:23:22', '2023-02-19 09:23:22', 1, 18, 2),
+(20, '2023-02-19 15:09:30', '2023-02-19 15:09:30', 1, 20, 10000);
 
 -- --------------------------------------------------------
 
@@ -231,11 +233,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`, `no_rek`, `bank`) VALUES
-(1, 'staff 4', 'staff@test.com', NULL, '$2y$10$lk5vRBKUl2nC.Ac0jMfpRuOg0cr8V1MbGSXQpZo/hoYzAxyk25PFi', NULL, NULL, '2023-02-18 21:02:18', 2, NULL, NULL),
-(2, 'spv', 'spv@test.com', NULL, '$2y$10$RqVrqIfAGl.Mt.jICk4K..i5QRn5I5O1oMnSZq9VpIMRb7e4gwrxi', NULL, NULL, NULL, 3, NULL, NULL),
-(3, 'sam', 'sam@test.com', NULL, '$2y$10$WcnFFrHBlcnyrvs/Fmxcu.2JQJ2iznwkEMDyKEPpXt6i.eANXdNlm', NULL, '2023-02-18 04:59:33', '2023-02-18 04:59:33', 2, NULL, NULL),
-(6, 'sams', 'sam@test1.com', NULL, '$2y$10$hr09Oxn5eNco/4X0a7xRSuhz49yo4v4NpegvF.AHyEBkT0meBOO3e', NULL, '2023-02-18 05:00:49', '2023-02-18 05:00:49', 2, NULL, NULL),
-(11, 'finance', 'finance@test.com', NULL, '$2y$10$zcT.jpu036ebw..GbHDx1esosL.ixIg39UQqhbv1NZwkKk/kryVIq', NULL, '2023-02-19 09:13:43', '2023-02-19 09:13:43', 4, NULL, NULL);
+(1, 'staff 4', 'staff@test.com', NULL, '$2y$10$lk5vRBKUl2nC.Ac0jMfpRuOg0cr8V1MbGSXQpZo/hoYzAxyk25PFi', NULL, NULL, '2023-02-18 21:02:18', 2, '12313123132099', 'BCA'),
+(2, 'spv', 'spv@test.com', NULL, '$2y$10$RqVrqIfAGl.Mt.jICk4K..i5QRn5I5O1oMnSZq9VpIMRb7e4gwrxi', NULL, NULL, NULL, 3, '12313123132099', 'BCA'),
+(3, 'sam', 'sam@test.com', NULL, '$2y$10$WcnFFrHBlcnyrvs/Fmxcu.2JQJ2iznwkEMDyKEPpXt6i.eANXdNlm', NULL, '2023-02-18 04:59:33', '2023-02-18 04:59:33', 2, '12313123132099', 'BCA'),
+(6, 'sams', 'sam@test1.com', NULL, '$2y$10$hr09Oxn5eNco/4X0a7xRSuhz49yo4v4NpegvF.AHyEBkT0meBOO3e', NULL, '2023-02-18 05:00:49', '2023-02-18 05:00:49', 2, '12313123132099', 'BCA'),
+(11, 'finance', 'finance@test.com', NULL, '$2y$10$zcT.jpu036ebw..GbHDx1esosL.ixIg39UQqhbv1NZwkKk/kryVIq', NULL, '2023-02-19 09:13:43', '2023-02-19 09:13:43', 4, '12313123132099', 'BCA'),
+(12, 'staff 123', 'staff123@test.com', NULL, '$2y$10$wY9CIqBxJjp1aA/G.R/E5uO8GYO0iZGQWwnJUvZGf9z4F4lEvLp4G', NULL, '2023-02-19 15:17:34', '2023-02-19 15:17:34', 2, '2131231312312', 'BNI');
 
 --
 -- Indexes for dumped tables
@@ -312,7 +315,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `dinas_travel`
 --
 ALTER TABLE `dinas_travel`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -330,7 +333,7 @@ ALTER TABLE `item_dinas_travel`
 -- AUTO_INCREMENT for table `item_request`
 --
 ALTER TABLE `item_request`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -354,7 +357,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

@@ -25,14 +25,16 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('login-proccess', [LoginController::class, 'login_proccess']);
-Route::middleware(['auth_check'])->group(function(){
+Route::middleware(['auth_check'])->group(function () {
     Route::get('/', [MainController::class, 'index']);
-
-    Route::get('/api/role', [RoleController::class, 'readAll']);
 
     Route::get('/user', [UserController::class, 'index']);
     Route::get('/dinas-travel', [DinasTravelController::class, 'index']);
+    Route::get('/travel-need-approval', [DinasTravelController::class, 'travelNeedApproval']);
+    Route::get('/travel-need-paid', [DinasTravelController::class, 'travelNeedPaid']);
     Route::get('/item-dinas-travel', [ItemDinasTravelController::class, 'index']);
+
+    Route::get('/api/role', [RoleController::class, 'readAll']);
 
     Route::get('/api/user', [UserController::class, 'readAll']);
     Route::get('/api/user/{id}', [UserController::class, 'readOne']);
@@ -41,9 +43,13 @@ Route::middleware(['auth_check'])->group(function(){
     Route::delete('/api/user/{id}', [UserController::class, 'delete']);
 
     Route::get('/api/dinas-travel', [DinasTravelController::class, 'readAll']);
+    Route::get('/api/dinas-travel/need-approval', [DinasTravelController::class, 'readAllByNeedApproval']);
+    Route::get('/api/dinas-travel/need-paid', [DinasTravelController::class, 'readAllByNeedPaid']);
     Route::get('/api/dinas-travel/{id}', [DinasTravelController::class, 'readOne']);
     Route::post('/api/dinas-travel', [DinasTravelController::class, 'create']);
     Route::put('/api/dinas-travel', [DinasTravelController::class, 'update']);
+    Route::put('/api/dinas-travel/approve', [DinasTravelController::class, 'approve']);
+    Route::put('/api/dinas-travel/reject', [DinasTravelController::class, 'reject']);
     Route::delete('/api/dinas-travel/{id}', [DinasTravelController::class, 'delete']);
 
     Route::get('/api/item-dinas-travel', [ItemDinasTravelController::class, 'readAll']);

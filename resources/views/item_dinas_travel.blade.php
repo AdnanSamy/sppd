@@ -8,8 +8,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -57,9 +56,22 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-
-                </div><!-- /.container-fluid -->
+                <div class="card p-2">
+                    <div class="row m-2">
+                        <button class="btn btn-primary ml-auto" id="btnNew">New</button>
+                    </div>
+                    <div class="container">
+                        <table class="table table-border mt-2" id="main_table">
+                            <thead class="bg-dark">
+                                <th>No.</th>
+                                <th>Item</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div><!-- /.container-fluid -->
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -80,6 +92,40 @@
     </div>
     <!-- ./wrapper -->
 
+    <div class="modal fade" id="modalItemDinasTravel" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="saveType">
+                    <input type="hidden" id="dataId">
+                    <div class="form-group">
+                        <div class="row mt-1">
+                            <div class="col-md-12">
+                                <label for="item">Name</label>
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" required class="form-control" id="item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="save" type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @include('script')
+    <script src="{{ asset('js/item_dinas_travel.js') }}"></script>
 </body>
+
 </html>

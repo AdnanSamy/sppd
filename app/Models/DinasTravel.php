@@ -11,8 +11,14 @@ class DinasTravel extends Model
 
     protected $table = 'dinas_travel';
 
-    public function itemRequest(){
+    public function itemRequest()
+    {
         return $this->hasMany(ItemRequest::class, 'dinas_travel_id');
+    }
+
+    public function requestUserId()
+    {
+        return $this->user(User::class, 'request_user_id');
     }
 
     // public function itemDinasTravel(){

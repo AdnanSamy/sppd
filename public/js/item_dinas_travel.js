@@ -1,9 +1,5 @@
+// ESSENTIAL VAR
 const mainTable = $("#main_table");
-const modalUser = $("#modalUser");
-const nameEl = $("#name");
-const email = $("#email");
-const password = $("#password");
-const role = $("#role");
 const save = $("#save");
 const saveType = $("#saveType");
 const btnNew = $("#btnNew");
@@ -11,11 +7,13 @@ const dataId = $("#dataId");
 const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
 
-mainTable.DataTable();
+// SPESIFIK
+const modalItemDinasTravel = $("#modalItemDinasTravel");
+const item = $("#item");
 
 const getAll = function () {
     $.ajax({
-        url: "/api/user",
+        url: "/api/item-dinas-travel",
         type: "get",
         success: function (res) {
             console.log("response get all -> ", res);
@@ -27,9 +25,7 @@ const getAll = function () {
                 mainTable.find("tbody").append(`
                     <tr>
                         <td>${i + 1}</td>
-                        <td>${e.name}</td>
-                        <td>${e.email}</td>
-                        <td>${e.role.name}</td>
+                        <td>${e.item}</td>
                         <td>
                             <button class="btn btn-warning" onclick="edit(${
                                 e.id
@@ -51,29 +47,24 @@ const edit = function (id) {
     saveType.val(UPDATE_VALUE);
     dataId.val(id);
     $.ajax({
-        url: `/api/user/${id}`,
+        url: `/api/item-dinas-travel/${id}`,
         type: "get",
         success: function (res) {
             const { data } = res;
-            nameEl.val(data.name);
-            email.val(data.email);
-            role.val(data.role_id);
+            item.val(data.item);
 
-            modalUser.modal("show");
+            modalItemDinasTravel.modal("show");
         },
     });
 };
 
 const updateProcess = function () {
     $.ajax({
-        url: "/api/user",
+        url: "/api/item-dinas-travel",
         type: "put",
         data: {
             id: dataId.val(),
-            name: nameEl.val(),
-            email: email.val(),
-            password: password.val(),
-            role_id: role.val(),
+            item: item.val(),
         },
         success: function (res) {
             // console.log("RESPONSE UPDATE -> ", res);
@@ -88,13 +79,10 @@ const updateProcess = function () {
 
 const saveProccess = function () {
     $.ajax({
-        url: "/api/user",
+        url: "/api/item-dinas-travel",
         type: "post",
         data: {
-            name: nameEl.val(),
-            email: email.val(),
-            password: password.val(),
-            role_id: role.val(),
+            item: item.val(),
         },
         success: function (res) {
             location.reload();
@@ -106,27 +94,12 @@ const saveProccess = function () {
     });
 };
 
-const getRoles = function () {
-    $.ajax({
-        url: "/api/role",
-        type: "get",
-        success: function (res) {
-            const { data } = res;
-            data.forEach((d) => {
-                role.append(`
-                    <option value="${d.id}">${d.name}</option>
-                `);
-            });
-        },
-    });
-};
-
 const deleteData = function (id) {
     $.ajax({
-        url: `/api/user/${id}`,
+        url: `/api/item-dinas-travel/${id}`,
         type: "delete",
         success: function (res) {
-            console.log("DEL RESPONSE -> ", res);
+            console.log('DEL RESPONSE -> ', res);
             location.reload();
         },
         error: function (err) {
@@ -146,10 +119,9 @@ save.click(function () {
 btnNew.click(function () {
     saveType.val(SAVE_VALUE);
 
-    modalUser.modal("show");
+    modalItemDinasTravel.modal("show");
 });
 
 $(document).ready(function () {
     getAll();
-    getRoles();
 });

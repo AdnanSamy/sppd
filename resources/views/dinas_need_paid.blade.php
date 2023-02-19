@@ -57,9 +57,6 @@
             <!-- Main content -->
             <section class="content">
                 <div class="card p-2">
-                    <div class="row m-2">
-                        <button class="btn btn-primary ml-auto" id="btnNew">New</button>
-                    </div>
                     <div class="container">
                         <table class="table table-border mt-2" id="main_table">
                             <thead class="bg-dark">
@@ -98,25 +95,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="saveType">
-                    <input type="hidden" id="dataId">
-                    <input type="hidden" id="total">
                     <div class="form-group">
-                        <div class="row mt-1">
+                        <div class="row mt-1 mb-3">
                             <div class="col-md-12">
                                 <label for="judul">Judul</label>
                             </div>
                             <div class="col-md-12">
                                 <input type="text" required class="form-control" id="judul">
                             </div>
-                        </div>
-                        <div class="row m-4">
-                            <button class="btn btn-primary ml-auto" id="btnNewItem">New Item</button>
                         </div>
                         <table id="itemTable" class="table table-border w-100">
                             <thead class="bg-dark">
@@ -127,65 +115,48 @@
                             <tbody>
                             </tbody>
                         </table>
-                        <div class="row mt-1 mb-3">
-                            <div class="col-md-12">
-                                <label for="note">Note</label>
-                            </div>
-                            <div class="col-md-12">
-                                <textarea id="note" cols="30" rows="10" class="form-control"></textarea>
-                            </div>
+                        <div class="row">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="save" type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalItem" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="modalPay" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="staticBackdropLabel">Pay</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <div class="row mt-1">
+                        <div class="row mt-1 mb-3">
                             <div class="col-md-12">
-                                <label for="item">Item Request</label>
+                                <label for="buktiPembayaran">Bukti Pembayaran</label>
                             </div>
                             <div class="col-md-12">
-                                <select id="item" class="form-control"></select>
-                            </div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-md-12">
-                                <label for="price">Price</label>
-                            </div>
-                            <div class="col-md-12">
-                                <input type="number" required class="form-control" id="price">
+                                <input type="file" id="buktiPembayaran">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="saveItem" type="button" class="btn btn-primary">Save</button>
+                    <button id="btnReject" type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- ./wrapper -->
-
+    <input type="hidden" id="saveType">
+    <input type="hidden" id="dataId">
     @include('script')
 
-    <script src="{{ asset('js/dinas_travel.js') }}"></script>
+    <script src="{{ asset('js/travel_need_paid.js') }}"></script>
 </body>
 
 </html>

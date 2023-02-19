@@ -40,10 +40,26 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/user" class="nav-link">
+                    <a href="/item-dinas-travel" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Item Dinas Travel
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/travel-need-approval" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dinas Need Approval
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/travel-need-paid" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dinas Need Paid
                         </p>
                     </a>
                 </li>

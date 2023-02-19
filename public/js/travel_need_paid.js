@@ -1,21 +1,15 @@
 const mainTable = $("#main_table");
 const itemTable = $("#itemTable");
 const modalDinas = $("#modalDinas");
-const modalItem = $("#modalItem");
-const btnNewItem = $("#btnNewItem");
+const modalPay = $("#modalPay");
 const judul = $("#judul");
-const save = $("#save");
 const saveType = $("#saveType");
 const saveItem = $("#saveItem");
-const btnNew = $("#btnNew");
 const dataId = $("#dataId");
-const item = $("#item");
-const price = $("#price");
 const itemRequests = [];
 const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
 const note = $("#note");
-const total = $("#total");
 
 function uuid() {
     return (
@@ -24,9 +18,14 @@ function uuid() {
     );
 }
 
+const actionPay = function (id) {
+    dataId.val(id);
+    modalPay.modal("show");
+};
+
 const getAll = function () {
     $.ajax({
-        url: "/api/dinas-travel",
+        url: "/api/dinas-travel/need-paid",
         type: "get",
         success: function (res) {
             console.log("response get all -> ", res);
@@ -42,12 +41,9 @@ const getAll = function () {
                         <td>${e.status}</td>
                         <td>${e.total}</td>
                         <td>
-                            <button class="btn btn-warning" onclick="edit(${
+                            <button class="btn btn-warning" onclick="actionPay(${
                                 e.id
-                            })">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteData(${
-                                e.id
-                            })">Delete</button>
+                            })">Pay</button>
                         </td>
                     </tr>
                 `);
@@ -61,16 +57,6 @@ const getAll = function () {
 const clearItemRequest = function () {
     itemRequests.splice(0, itemRequests.length);
     generateItemRequest();
-};
-
-const deleteData = function (id) {
-    $.ajax({
-        url: `/api/dinas-travel/${id}`,
-        type: "delete",
-        success: function (res) {
-            location.reload();
-        },
-    });
 };
 
 const edit = function (id) {
@@ -87,7 +73,6 @@ const edit = function (id) {
             clearItemRequest();
 
             judul.val(data.judul);
-            note.val(data.note);
             item_request.map((item) => {
                 const { item_dinas_travel } = item;
 
@@ -102,46 +87,6 @@ const edit = function (id) {
             generateItemRequest();
 
             modalDinas.modal("show");
-        },
-    });
-};
-
-const updateProcess = function () {
-    $.ajax({
-        url: "/api/dinas-travel",
-        type: "put",
-        data: {
-            id: dataId.val(),
-            judul: judul.val(),
-            total: total.val(),
-            itemRequest: itemRequests,
-        },
-        success: function (res) {
-            // console.log("RESPONSE UPDATE -> ", res);
-            location.reload();
-        },
-        error: function (err) {
-            alert("error");
-            console.log("ERR -> ", err);
-        },
-    });
-};
-
-const saveProccess = function () {
-    $.ajax({
-        url: "/api/dinas-travel",
-        type: "post",
-        data: {
-            judul: judul.val(),
-            total: total.val(),
-            itemRequest: itemRequests,
-        },
-        success: function (res) {
-            location.reload();
-        },
-        error: function (err) {
-            alert("error");
-            console.log("ERR -> ", err);
         },
     });
 };
@@ -167,27 +112,11 @@ const getItemDinasTravels = function () {
     });
 };
 
-const deleteItemRequest = function (id) {
-    const itemRequest = itemRequests.findIndex((e) => e.id == id);
-
-    console.log("INDEX ITEM -> ", itemRequest);
-
-    if (itemRequest != -1) {
-        itemRequests.splice(itemRequest, 1);
-    }
-
-    generateItemRequest();
-};
-
 const generateItemRequest = function () {
     itemTable.DataTable().destroy();
     itemTable.find("tbody").html("");
 
-    let totalPrice = 0;
-
     itemRequests.forEach((item, i) => {
-        totalPrice += item.price;
-
         itemTable.find("tbody").append(`
             <tr>
                 <td>${item.item}</td>
@@ -201,12 +130,14 @@ const generateItemRequest = function () {
         `);
     });
 
-    total.val(totalPrice)
-
     itemTable.DataTable({
         width: "100%",
     });
 };
+
+btnReject.click(function () {
+    reject();
+});
 
 saveItem.click(function () {
     const optionSelected = item.find(":selected");
@@ -219,25 +150,6 @@ saveItem.click(function () {
 
     generateItemRequest();
     modalItem.modal("hide");
-});
-
-save.click(function () {
-    if (saveType.val() == SAVE_VALUE) {
-        saveProccess();
-    } else if (saveType.val() == UPDATE_VALUE) {
-        updateProcess();
-    }
-});
-
-btnNewItem.click(function () {
-    modalItem.modal("show");
-});
-
-btnNew.click(function () {
-    clearItemRequest();
-    saveType.val(SAVE_VALUE);
-
-    modalDinas.modal("show");
 });
 
 $(document).ready(function () {

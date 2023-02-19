@@ -1,21 +1,17 @@
 const mainTable = $("#main_table");
 const itemTable = $("#itemTable");
 const modalDinas = $("#modalDinas");
-const modalItem = $("#modalItem");
-const btnNewItem = $("#btnNewItem");
+const modalReject = $("#modalReject");
 const judul = $("#judul");
-const save = $("#save");
 const saveType = $("#saveType");
 const saveItem = $("#saveItem");
-const btnNew = $("#btnNew");
 const dataId = $("#dataId");
-const item = $("#item");
-const price = $("#price");
 const itemRequests = [];
 const SAVE_VALUE = 1;
 const UPDATE_VALUE = 2;
 const note = $("#note");
-const total = $("#total");
+const btnReject = $("#btnReject");
+const rejectId = $("#rejectId");
 
 function uuid() {
     return (
@@ -24,9 +20,49 @@ function uuid() {
     );
 }
 
+const actionReject = function (id) {
+    rejectId.val(id);
+    modalReject.modal("show");
+};
+
+const approve = function (id) {
+    $.ajax({
+        url: "/api/dinas-travel/approve",
+        type: "put",
+        data: {
+            id,
+        },
+        success: function (res) {
+            console.log("APPROVE RESPONSE -> ", res);
+        },
+        error: function (err) {
+            alert("error");
+            console.log("ERR -> ", err);
+        },
+    });
+};
+
+const reject = function () {
+    $.ajax({
+        url: "/api/dinas-travel/reject",
+        type: "put",
+        data: {
+            id: rejectId.val(),
+            note: note.val(),
+        },
+        success: function (res) {
+            console.log("REJECT RESPONSE -> ", res);
+        },
+        error: function (err) {
+            alert("error");
+            console.log("ERR -> ", err);
+        },
+    });
+};
+
 const getAll = function () {
     $.ajax({
-        url: "/api/dinas-travel",
+        url: "/api/dinas-travel/need-approval",
         type: "get",
         success: function (res) {
             console.log("response get all -> ", res);
@@ -42,12 +78,12 @@ const getAll = function () {
                         <td>${e.status}</td>
                         <td>${e.total}</td>
                         <td>
-                            <button class="btn btn-warning" onclick="edit(${
+                            <button class="btn btn-warning" onclick="approve(${
                                 e.id
-                            })">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteData(${
+                            })">Approve</button>
+                            <button class="btn btn-danger" onclick="actionReject(${
                                 e.id
-                            })">Delete</button>
+                            })">Reject</button>
                         </td>
                     </tr>
                 `);
@@ -61,16 +97,6 @@ const getAll = function () {
 const clearItemRequest = function () {
     itemRequests.splice(0, itemRequests.length);
     generateItemRequest();
-};
-
-const deleteData = function (id) {
-    $.ajax({
-        url: `/api/dinas-travel/${id}`,
-        type: "delete",
-        success: function (res) {
-            location.reload();
-        },
-    });
 };
 
 const edit = function (id) {
@@ -87,7 +113,6 @@ const edit = function (id) {
             clearItemRequest();
 
             judul.val(data.judul);
-            note.val(data.note);
             item_request.map((item) => {
                 const { item_dinas_travel } = item;
 
@@ -102,46 +127,6 @@ const edit = function (id) {
             generateItemRequest();
 
             modalDinas.modal("show");
-        },
-    });
-};
-
-const updateProcess = function () {
-    $.ajax({
-        url: "/api/dinas-travel",
-        type: "put",
-        data: {
-            id: dataId.val(),
-            judul: judul.val(),
-            total: total.val(),
-            itemRequest: itemRequests,
-        },
-        success: function (res) {
-            // console.log("RESPONSE UPDATE -> ", res);
-            location.reload();
-        },
-        error: function (err) {
-            alert("error");
-            console.log("ERR -> ", err);
-        },
-    });
-};
-
-const saveProccess = function () {
-    $.ajax({
-        url: "/api/dinas-travel",
-        type: "post",
-        data: {
-            judul: judul.val(),
-            total: total.val(),
-            itemRequest: itemRequests,
-        },
-        success: function (res) {
-            location.reload();
-        },
-        error: function (err) {
-            alert("error");
-            console.log("ERR -> ", err);
         },
     });
 };
@@ -167,27 +152,11 @@ const getItemDinasTravels = function () {
     });
 };
 
-const deleteItemRequest = function (id) {
-    const itemRequest = itemRequests.findIndex((e) => e.id == id);
-
-    console.log("INDEX ITEM -> ", itemRequest);
-
-    if (itemRequest != -1) {
-        itemRequests.splice(itemRequest, 1);
-    }
-
-    generateItemRequest();
-};
-
 const generateItemRequest = function () {
     itemTable.DataTable().destroy();
     itemTable.find("tbody").html("");
 
-    let totalPrice = 0;
-
     itemRequests.forEach((item, i) => {
-        totalPrice += item.price;
-
         itemTable.find("tbody").append(`
             <tr>
                 <td>${item.item}</td>
@@ -201,12 +170,14 @@ const generateItemRequest = function () {
         `);
     });
 
-    total.val(totalPrice)
-
     itemTable.DataTable({
         width: "100%",
     });
 };
+
+btnReject.click(function () {
+    reject();
+});
 
 saveItem.click(function () {
     const optionSelected = item.find(":selected");
@@ -219,25 +190,6 @@ saveItem.click(function () {
 
     generateItemRequest();
     modalItem.modal("hide");
-});
-
-save.click(function () {
-    if (saveType.val() == SAVE_VALUE) {
-        saveProccess();
-    } else if (saveType.val() == UPDATE_VALUE) {
-        updateProcess();
-    }
-});
-
-btnNewItem.click(function () {
-    modalItem.modal("show");
-});
-
-btnNew.click(function () {
-    clearItemRequest();
-    saveType.val(SAVE_VALUE);
-
-    modalDinas.modal("show");
 });
 
 $(document).ready(function () {

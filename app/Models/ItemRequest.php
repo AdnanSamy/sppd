@@ -9,7 +9,7 @@ class ItemRequest extends Model
 {
     use HasFactory;
 
-    protected $table = 'item_dinas_travel';
+    protected $table = 'item_request';
 
     protected $fillable = [
         'dinas_travel_id',

@@ -92,9 +92,8 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
-    <div class="modal fade" id="modalBuktiTransfer" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal" id="modalBuktiTransfer" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Bukti Transfer</h5>
@@ -115,8 +114,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalDinas" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal" id="modalDinas" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -125,7 +123,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="overflow-y: auto; height: 100%;">
                     <input type="hidden" id="saveType">
                     <input type="hidden" id="dataId">
                     <input type="hidden" id="total">
@@ -167,8 +165,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalItem" data-backdrop="static" data-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal" id="modalItem" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">

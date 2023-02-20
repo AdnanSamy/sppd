@@ -247,6 +247,13 @@ saveItem.click(function () {
     modalItem.modal("hide");
 });
 
+modalItem.on("hide.bs.modal", function () {
+    modalDinas.modal("hide");
+    setTimeout(() => {
+        modalDinas.modal("show");
+    }, 1);
+});
+
 save.click(function () {
     if (saveType.val() == SAVE_VALUE) {
         saveProccess();
